@@ -1,8 +1,6 @@
 import os, time, sys
 import numpy as np 
 import cv2
-from matplotlib import pyplot as plt
-import imageio
 import tensorflow as tf
 from IPython import display
 

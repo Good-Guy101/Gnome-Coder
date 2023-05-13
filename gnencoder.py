@@ -117,8 +117,3 @@ def generate_epoch_gnomes(model, epoch, sample):
 	plt.savefig("./img_epoch/"+"img_epoch_{:04d}.png".format(epoch))
 	#plt.show()
 	plt.close()
-"""
-cvae = CVAE(PARAMS)
-cvae.encoder.summary()
-cvae.decoder.summary()
-"""
