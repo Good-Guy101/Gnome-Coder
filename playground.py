@@ -17,6 +17,8 @@ sample = np.empty([1,25], dtype="float32")
 img = np.zeros([256,256, 3])
 scale = 2
 
+count = 0
+
 
 sliders = []
 
@@ -48,12 +50,15 @@ def zero_callback(sender, app_data):
 	dpg.set_value("texture_tag", img)
 
 def save_callback(sender, app_data):
+	global count
 	for i in range(len(sliders)):
 		sample[:,i] = dpg.get_value(sliders[i])
 	img = cvae.sample(sample).numpy()
+	img  = img.reshape([256, 256, 3])
 	print(img.shape)
-	im = Image.fromarray((img))
-	im.save("user_made.jpeg")
+	cv2.imwrite("user_generated"+ str(count) +".png", cv2.cvtColor((img * 255), cv2.COLOR_BGR2RGB))
+	count += 1
+	
 
 with dpg.texture_registry():
 	dpg.add_raw_texture(width=256, 
@@ -84,7 +89,7 @@ with dpg.window(label="Sliders", width=460):
 		dpg.add_button(label="Save", callback=save_callback)
 
 
-with dpg.window(label="Gnome", width=256):
+with dpg.window(label="Gnome", width=256, pos=[900-256,0]):
 	dpg.add_image("texture_tag")
 
 dpg.setup_dearpygui()
